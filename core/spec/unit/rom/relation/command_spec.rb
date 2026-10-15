@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rom/relation'
+require 'rom/command_proxy'
 
 RSpec.describe ROM::Relation, '#command' do
   subject(:relation) do
@@ -36,6 +37,18 @@ RSpec.describe ROM::Relation, '#command' do
 
         expect(relation.command(:my_command)).to be(custom_command)
       end
+    end
+  end
+
+  context 'when command is a graph with a restrictable root' do
+    let(:graph) { ROM::CommandProxy.new(double(:graph, restrictible?: true), :user) }
+
+    before do
+      commands[:create] = graph
+    end
+
+    it 'returns the graph as it is' do
+      expect(relation.command(:create)).to be(graph)
     end
   end
 end
