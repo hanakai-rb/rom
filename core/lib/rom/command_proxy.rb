@@ -24,7 +24,11 @@ module ROM
     # @api private
     def >>(other) = self.class.new(command >> other)
 
+    # A graph is built for a combined relation, which can't be passed on to
+    # its root command, so it is never restricted even when the root's class is
+    # restrictable
+    #
     # @api private
-    def restrictible? = command.restrictible?
+    def restrictible? = false
   end
 end

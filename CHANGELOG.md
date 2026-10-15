@@ -1,3 +1,9 @@
+## unreleased
+
+### Fixed
+
+- [rom-core] `Relation::Combined#command(:create)` no longer fails with `NoMethodError` on `CommandProxy#new` when the adapter's create command is restrictable (@flash-gordon)
+
 ## 5.4.3 2025-11-20
 
 - [rom-repository] Fix another memory leak in relation reader (via #702) (@pat + @flash-gordon)
