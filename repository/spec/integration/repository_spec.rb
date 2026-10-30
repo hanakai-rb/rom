@@ -83,6 +83,22 @@ RSpec.describe 'ROM repository' do
     expect(post_label.post_id).to be(post_label.post.id)
   end
 
+  it 'loads a wrapped relation combined with another relation' do
+    post = repo.posts.wrap(:author).combine(:labels).where(title: 'Hello From Jane').one
+
+    expect(post.title).to eql('Hello From Jane')
+    expect(post.author.name).to eql('Jane')
+    expect(post.labels.map(&:name)).to eql(%w[red blue])
+  end
+
+  it 'loads a combined relation wrapped with another relation' do
+    post = repo.posts.combine(:labels).wrap(:author).where(title: 'Hello From Jane').one
+
+    expect(post.title).to eql('Hello From Jane')
+    expect(post.author.name).to eql('Jane')
+    expect(post.labels.map(&:name)).to eql(%w[red blue])
+  end
+
   it 'loads an aggregate via custom fks' do
     jane = repo.root.combine(:posts).where(name: 'Jane').one
 
