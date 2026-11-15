@@ -58,7 +58,7 @@ module ROM
       # @api private
       def method_missing(name, ...)
         if left.respond_to?(name)
-          response = left.__send__(name, ...)
+          response = left.public_send(name, ...)
 
           if decorate?(response)
             self.class.new(response, right)

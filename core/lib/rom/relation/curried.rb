@@ -109,7 +109,7 @@ module ROM
       # @api private
       def method_missing(meth, ...)
         if relation.respond_to?(meth)
-          response = relation.__send__(meth, ...)
+          response = relation.public_send(meth, ...)
 
           super if response.is_a?(self.class)
 
