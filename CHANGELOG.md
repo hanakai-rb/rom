@@ -3,6 +3,7 @@
 ### Fixed
 
 - [rom-core] `Relation::Combined#command(:create)` no longer fails with `NoMethodError` on `CommandProxy#new` when the adapter's create command is restrictable (@flash-gordon)
+- [rom-core] Several `associations` blocks in one schema are merged instead of the last one replacing the others (#683) (@rafayqayyum)
 
 ## 5.4.3 2025-11-20
 

@@ -112,7 +112,11 @@ module ROM
       #
       # @api public
       def associations(&)
-        @associations_dsl = AssociationsDSL.new(relation, &)
+        if associations_dsl
+          associations_dsl.instance_exec(&)
+        else
+          @associations_dsl = AssociationsDSL.new(relation, &)
+        end
       end
 
       # Builds a representation of the information needed to create an
