@@ -174,10 +174,10 @@ RSpec.describe ROM::Plugins::Command::Timestamps do
   end
 
   it 'allows calling a restricted delete command without input' do
-    users.create.call(name: 'Piotr', email: 'piotr@solnic.eu')
-    users.create.call(name: 'Jane', email: 'jane@doe.org')
+    users.create.call(name: 'John', email: 'john@example.com')
+    users.create.call(name: 'Jane', email: 'jane@example.com')
 
-    users.delete.by_name('Piotr').call
+    users.delete.by_name('John').call
 
     expect(container.relations[:users].to_a.map { |user| user[:name] }).to eql(['Jane'])
   end
