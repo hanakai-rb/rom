@@ -3,6 +3,7 @@
 ### Fixed
 
 - [rom-core] `Relation::Combined#command(:create)` no longer fails with `NoMethodError` on `CommandProxy#new` when the adapter's create command is restrictable (@flash-gordon)
+- [rom-core] A restricted command with before hooks, such as `delete` with the timestamps plugin, can be called without input (#672) (@rafayqayyum)
 
 ## 5.4.3 2025-11-20
 
