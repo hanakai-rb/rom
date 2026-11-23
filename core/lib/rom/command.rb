@@ -273,7 +273,7 @@ module ROM
           prepared =
             if curried?
               apply_hooks(before_hooks, *(curry_args + args))
-            else
+            elsif !args.empty?
               apply_hooks(before_hooks, *args)
             end
 

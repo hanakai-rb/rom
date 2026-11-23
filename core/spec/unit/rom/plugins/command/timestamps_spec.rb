@@ -57,6 +57,11 @@ RSpec.describe ROM::Plugins::Command::Timestamps do
         timestamp :updated_at
       end
 
+      define :delete do
+        use :timestamps
+        timestamp :updated_at
+      end
+
       define :create_with_task, type: :create do
         result :one
         use :timestamps
@@ -166,5 +171,14 @@ RSpec.describe ROM::Plugins::Command::Timestamps do
 
     expect(created).to be_within(1).of(time)
     expect(updated).to eq created
+  end
+
+  it 'allows calling a restricted delete command without input' do
+    users.create.call(name: 'John', email: 'john@example.com')
+    users.create.call(name: 'Jane', email: 'jane@example.com')
+
+    users.delete.by_name('John').call
+
+    expect(container.relations[:users].to_a.map { |user| user[:name] }).to eql(['Jane'])
   end
 end
