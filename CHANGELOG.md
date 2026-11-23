@@ -5,6 +5,7 @@
 - [rom-core] `Relation::Combined#command(:create)` no longer fails with `NoMethodError` on `CommandProxy#new` when the adapter's create command is restrictable (@flash-gordon)
 - [rom-core] Curried relations and pipelines forward calls with `public_send`, so `node(:x) { _1.select(:id) }` on a nested combine no longer calls `Kernel#select` (#676) (@rafayqayyum)
 - [rom-core] A restricted command with before hooks, such as `delete` with the timestamps plugin, can be called without input (#672) (@rafayqayyum)
+- [rom-core] Several `associations` blocks in one schema are merged instead of the last one replacing the others (#683) (@rafayqayyum)
 
 ## 5.4.3 2025-11-20
 

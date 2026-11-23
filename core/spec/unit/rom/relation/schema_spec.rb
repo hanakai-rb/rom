@@ -278,6 +278,27 @@ RSpec.describe ROM::Relation, '.schema' do
       .to raise_error(ROM::MissingSchemaClassError, 'Test::Users relation is missing schema_class')
   end
 
+  it 'keeps the associations from every associations block' do
+    class Test::Users < ROM::Relation[:memory]
+      schema do
+        attribute :id, Types::Integer.meta(primary_key: true)
+
+        associations do
+          has_many :tasks
+        end
+
+        associations do
+          has_many :posts
+        end
+      end
+    end
+
+    associations = Test::Users.schema_proc.call.associations
+
+    expect(associations.key?(:tasks)).to be(true)
+    expect(associations.key?(:posts)).to be(true)
+  end
+
   describe '#schema' do
     it 'returns defined schema' do
       class Test::Users < ROM::Relation[:memory]
