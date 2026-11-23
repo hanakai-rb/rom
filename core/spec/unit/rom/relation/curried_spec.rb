@@ -91,5 +91,15 @@ RSpec.describe ROM::Relation::Curried do
     it 'raises no method error when method is not defined' do
       expect { users_relation.by_name.not_here }.to raise_error(NoMethodError, /not_here/)
     end
+
+    it 'does not call a private Kernel method of the same name on a combined relation' do
+      relation = Class.new(ROM::Memory::Relation) do
+        def select(*names) = new(dataset.project(*names))
+      end.new(users_dataset)
+      combined = ROM::Relation::Combined.new(relation, [])
+      curried = ROM::Relation::Curried.new(combined, view: :by_name, arity: 1)
+
+      expect(curried.select(:name).relation.root.to_a).to eql([{ name: 'Joe' }, { name: 'Jane' }])
+    end
   end
 end
